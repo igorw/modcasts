@@ -8,12 +8,13 @@
  * with this source code in the file LICENSE.
  */
 
-namespace Modcasts;
+namespace Modcasts\Entities;
 
 class Episode {
 	public $id;
 	public $title;
 	public $created_at;
+	public $show_notes;
 	public $file_bytes;
 	public $theme_artist;
 	public $theme_license;

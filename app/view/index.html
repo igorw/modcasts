@@ -1,59 +1,29 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<section class="episode" id="episode_1">
-	<h2 class="episode-title"><a href="#">#1 Introducing Something Else</a></h2>
-	<p class="episode-date">2010-05-03</p>
+{% for episode in episodes %}
+<section class="episode" id="episode_{{ episode.id }}">
+	<h2 class="episode-title"><a href="#">#{{ episode.id }}: {{ episode.title }}</a></h2>
+	<p class="episode-date">{{ episode.created_at|date }}</p>
 	<p>
 		<video controls="controls">
-			<source src="public/dummy.mov" />
-			<source src="public/dummy.ogv" />
+			<source src="public/{{ episode.id }}.mov" />
+			<source src="public/{{ episode.id }}.ogv" />
 			Please use a decent browser, such as Firefox or Chrome.
 		</video>
 	</p>
 	<p class="theme-music">
-		Theme music: <a rel="cc:attributionURL" property="cc:attributionName" href="http://freemusicarchive.org/music/Latch_Swing/">Latché Swing</a> <br /> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/2.0/fr/">CC BY-NC-SA 2.0</a>
+		Theme music: <a rel="cc:attributionURL" property="cc:attributionName" href="{{ episode.theme_artist.website }}">{{ episode.theme_artist.name }}</a><br />
+		<a rel="license" href="{{ episode.theme_license.url }}">{{ episode.theme_license.name }}</a>
 	</p>
 	<p class="download-container clearfix">
-		<span class="download-link"><a href="public/dummy.ogv">Download</a> <span class="download-extra">(176 KiB)</span></span>
+		<span class="download-link"><a href="public/{{ episode.id }}.ogv">Download</a> <span class="download-extra">({{ episode.file_bytes|filesize }})</span></span>
 	</p>
+	{% for line in episode.show_notes %}
 	<p>
-		This is something else.
+		{{ line }}
 	</p>
-	<p>
-		Very much so.
-	</p>
-	<p>
-		<ul>
-			<li>Useless</li>
-			<li>List</li>
-			<li>Is</li>
-			<li>Fun</li>
-		</ul>
-	</p>
+	{% endfor %}
 </section>
-
-<section class="episode" id="episode_0">
-	<h2 class="episode-title"><a href="#">#0 Introducing Slave</a></h2>
-	<p class="episode-date">2010-05-02</p>
-	<p>
-		<video controls="controls">
-			<source src="public/dummy.mov" />
-			<source src="public/dummy.ogv" />
-			Please use a decent browser, such as Firefox or Chrome.
-		</video>
-	</p>
-	<p class="theme-music">
-		Theme music: <a rel="cc:attributionURL" property="cc:attributionName" href="http://freemusicarchive.org/music/Latch_Swing/">Latché Swing</a> <br /> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/2.0/fr/">CC BY-NC-SA 2.0</a>
-	</p>
-	<p class="download-container clearfix">
-		<span class="download-link"><a href="public/dummy.ogv">Download</a> <span class="download-extra">(176 KiB)</span></span>
-	</p>
-	<p>
-		The Slave abuses HTTP to install phpBB for you. He is a command-line PHP script who makes HTTP requests though phpBB 3.0's installation.
-	</p>
-	<p>
-		In this episode, we will take a look at Slave. I will show you how to use it, explain how it works and give you a little demo.
-	</p>
-</section>
+{% endfor %}
 {% endblock %}

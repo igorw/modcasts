@@ -8,9 +8,10 @@
  * with this source code in the file LICENSE.
  */
 
-namespace Modcasts\Entities;
+namespace Modcasts;
 
-class Artist {
-	public $name;
-	public $website;
+interface EntityManager {
+	public function findAll();
+	public function find($id);
+	public function save($entity);
 }

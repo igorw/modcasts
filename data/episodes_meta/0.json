@@ -1,0 +1,18 @@
+{
+	"id" : 0,
+	"title" : "Introducing Slave",
+	"created_at" : 1272817439,
+	"show_notes" : [
+		"The Slave abuses HTTP to install phpBB for you. He is a command-line PHP script who makes HTTP requests though phpBB 3.0's installation.",
+		"In this episode, we will take a look at Slave. I will show you how to use it, explain how it works and give you a little demo."
+	],
+	"file_bytes" : 173919,
+	"theme_artist" : {
+		"name" : "Latché Swing",
+		"website" : "http://freemusicarchive.org/music/Latch_Swing/"
+	},
+	"theme_license" : {
+		"name" : "CC BY-NC-SA 2.0",
+		"url" : "http://creativecommons.org/licenses/by-nc-sa/2.0/"
+	}
+}

@@ -8,7 +8,7 @@
  * with this source code in the file LICENSE.
  */
 
-namespace Modcasts;
+namespace Modcasts\Entities;
 
 class License {
 	public $name;
