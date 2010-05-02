@@ -23,7 +23,7 @@ $twig = new Twig_Environment(new Twig_Loader_Filesystem('app/view'), array(
 ));
 $twig->addExtension(new TwigExtension());
 
-$env = new Environment(__DIR__, $twig);
+$env = new Environment(__DIR__, $twig, $em);
 
 $request = new Request;
 

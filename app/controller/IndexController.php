@@ -10,8 +10,6 @@
 
 namespace Modcasts\Controller;
 
-use Modcasts\JsonEntityManager;
-
 use Modcasts\Controller;
 
 use Symfony\Components\RequestHandler\Request,
@@ -19,17 +17,9 @@ use Symfony\Components\RequestHandler\Request,
 
 class IndexController extends Controller {
 	public function indexAction(Request $request) {
-		$em = new JsonEntityManager($this->env->basePath . 'data/episodes_meta');
-
-		$episodes = $em->findAll();
+		$q = $this->env->em->createQuery('select e from Modcasts\Entities\Episode e');
 		
-		usort($episodes, function($a, $b) {
-			// sort by date descending
-			if ($a->created_at == $b->created_at) {
-				return 0;
-			}
-			return ($a->created_at > $b->created_at) ? -1 : 1;
-		});
+		$episodes = $q->execute();
 		
 		return $this->render('index.html', array(
 			'episodes'	=> $episodes,
