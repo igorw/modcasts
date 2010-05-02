@@ -1,3 +1,4 @@
 .DS_Store
-develop/mockup/*.mov
-develop/mockup/*.ogv
+cache/**/*.php
+*.mov
+*.ogv
