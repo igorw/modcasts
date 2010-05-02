@@ -16,9 +16,9 @@ class Episode {
 	public $id;
 	/** @Column(length=100) */
 	public $title;
-	/** @Column(type="date") */
-	public $created_at;
 	/** @Column(type="datetime") */
+	public $created;
+	/** @Column(type="text") */
 	public $show_notes;
 	/** @Column(type="integer") */
 	public $file_bytes;
@@ -26,4 +26,8 @@ class Episode {
 	public $theme_artist;
 	/** @OneToOne(targetEntity="License") */
 	public $theme_license;
+	
+	public function __construct() {
+		$this->created = new \DateTime("now");
+	}
 }
