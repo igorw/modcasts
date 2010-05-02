@@ -18,6 +18,7 @@ $loader = new UniversalClassLoader;
 $loader->registerNamespaces(array(
 	'Modcasts'		=> __DIR__ . '/app/lib',
 	'Symfony'		=> __DIR__ . '/vendor/Symfony/src',
+	'Doctrine'		=> __DIR__ . '/vendor/Doctrine/lib',
 ));
 $loader->registerPrefixes(array(
 	'Twig_'			=> __DIR__ . '/vendor/Twig/lib',
