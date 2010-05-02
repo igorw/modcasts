@@ -1,0 +1,19 @@
+<section class="episode" id="episode_{{ episode.id }}">
+	<h2 class="episode-title"><a href="#">#{{ episode.id }}: {{ episode.title }}</a></h2>
+	<p class="episode-date">{{ episode.created|date }}</p>
+	<p>
+		<video controls="controls">
+			<source src="data/episodes/{{ episode.id }}.mov" />
+			<source src="data/episodes/{{ episode.id }}.ogv" />
+			Please use a decent browser, such as Firefox or Chrome.
+		</video>
+	</p>
+	<p class="theme-music">
+		Theme music: <a rel="cc:attributionURL" property="cc:attributionName" href="{{ episode.theme_artist.website }}">{{ episode.theme_artist.name }}</a><br />
+		<a rel="license" href="{{ episode.theme_license.url }}">{{ episode.theme_license.name }}</a>
+	</p>
+	<p class="download-container clearfix">
+		<span class="download-link"><a href="data/episodes/{{ episode.id }}.ogv">Download</a> <span class="download-extra">({{ episode.file_bytes|filesize }})</span></span>
+	</p>
+	{{ episode.show_notes|markdown }}
+</section>
