@@ -13,9 +13,11 @@ namespace Modcasts;
 class Environment {
 	public $basePath;
 	public $twig;
+	public $em;
 	
-	public function __construct($basePath, \Twig_Environment $twig) {
+	public function __construct($basePath, \Twig_Environment $twig, $em) {
 		$this->basePath = (substr($basePath, -1) == '/') ? $basePath : $basePath . '/';
 		$this->twig = $twig;
+		$this->em = $em;
 	}
 }
