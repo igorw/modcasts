@@ -7,8 +7,8 @@
 	<p class="episode-date">{{ episode.created_at|date }}</p>
 	<p>
 		<video controls="controls">
-			<source src="public/{{ episode.id }}.mov" />
-			<source src="public/{{ episode.id }}.ogv" />
+			<source src="data/episodes/{{ episode.id }}.mov" />
+			<source src="data/episodes/{{ episode.id }}.ogv" />
 			Please use a decent browser, such as Firefox or Chrome.
 		</video>
 	</p>
@@ -17,7 +17,7 @@
 		<a rel="license" href="{{ episode.theme_license.url }}">{{ episode.theme_license.name }}</a>
 	</p>
 	<p class="download-container clearfix">
-		<span class="download-link"><a href="public/{{ episode.id }}.ogv">Download</a> <span class="download-extra">({{ episode.file_bytes|filesize }})</span></span>
+		<span class="download-link"><a href="data/episodes/{{ episode.id }}.ogv">Download</a> <span class="download-extra">({{ episode.file_bytes|filesize }})</span></span>
 	</p>
 	{% for line in episode.show_notes %}
 	<p>
