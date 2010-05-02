@@ -46,8 +46,9 @@ $config->setProxyDir(__DIR__ . '/cache/doctrine');
 $config->setProxyNamespace('Modcasts\Proxy');
 
 $connectionOptions = array(
-    'driver' => 'pdo_sqlite',
-    'path' => 'database.sqlite'
+	'driver'	=> 'pdo_mysql',
+	'dbname'	=> 'modcasts',
+	'user'		=> 'root',
 );
 
 $em = \Doctrine\ORM\EntityManager::create($connectionOptions, $config);
