@@ -10,7 +10,12 @@
 
 namespace Modcasts\Entities;
 
+/** @Entity */
 class License {
+	/** @Id @Column(type="integer") @GeneratedValue(strategy="AUTO") */
+	public $id;
+	/** @Column(length=100) */
 	public $name;
+	/** @Column(length=255) */
 	public $url;
 }

@@ -30,3 +30,22 @@ $loader->register();
 
 $loader = new ClassLoader('Modcasts\Controller', __DIR__ . '/app/controller', true);
 $loader->register();
+
+
+$config = new \Doctrine\ORM\Configuration();
+$config->setMetadataCacheImpl(new \Doctrine\Common\Cache\ArrayCache);
+$driverImpl = $config->newDefaultAnnotationDriver(array(__DIR__."/app/model"));
+$config->setMetadataDriverImpl($driverImpl);
+
+$loader = new \Modcasts\ClassLoader('Modcasts\Proxy', __DIR__ . '/cache/doctrine', true);
+$loader->register();
+
+$config->setProxyDir(__DIR__ . '/cache/doctrine');
+$config->setProxyNamespace('Modcasts\Proxy');
+
+$connectionOptions = array(
+    'driver' => 'pdo_sqlite',
+    'path' => 'database.sqlite'
+);
+
+$em = \Doctrine\ORM\EntityManager::create($connectionOptions, $config);
