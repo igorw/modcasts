@@ -26,3 +26,6 @@ $loader->register();
 
 $loader = new ClassLoader('Modcasts\Entities', __DIR__ . '/app/model', true);
 $loader->register();
+
+$loader = new ClassLoader('Modcasts\Controller', __DIR__ . '/app/controller', true);
+$loader->register();

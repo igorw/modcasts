@@ -10,6 +10,8 @@
 
 namespace Modcasts;
 
+use Symfony\Components\RequestHandler\Request;
+
 use Twig_Environment,
 	Twig_Loader_Filesystem;
 
@@ -21,18 +23,9 @@ $twig = new Twig_Environment(new Twig_Loader_Filesystem('app/view'), array(
 ));
 $twig->addExtension(new TwigExtension());
 
-$em = new JsonEntityManager(__DIR__ . '/data/episodes_meta');
+$env = new Environment(__DIR__, $twig);
 
-$episodes = $em->findAll();
-usort($episodes, function($a, $b) {
-	// sort by date descending
-	if ($a->created_at == $b->created_at) {
-		return 0;
-	}
-	return ($a->created_at > $b->created_at) ? -1 : 1;
-});
+$request = new Request;
 
-$template = $twig->loadTemplate('index.html');
-echo $template->render(array(
-	'episodes'	=> $episodes,
-));
+$controller = new Controller\IndexController($env);
+echo $controller->indexAction($request);
