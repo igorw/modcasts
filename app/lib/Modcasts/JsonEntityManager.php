@@ -22,7 +22,7 @@ class JsonEntityManager implements EntityManager {
 		
 		$iterator = new \DirectoryIterator($this->storePath);
 		foreach ($iterator as $file) {
-			if ($file->isDot()) {
+			if (!preg_match('#.json$#', $file->getFilename())) {
 				continue;
 			}
 			$filename = $file->getPathname();
