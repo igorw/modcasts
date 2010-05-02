@@ -17,7 +17,11 @@ use Symfony\Components\RequestHandler\Request,
 
 class IndexController extends Controller {
 	public function indexAction(Request $request) {
-		$q = $this->env->em->createQuery('select e from Modcasts\Entities\Episode e');
+		$q = $this->env->em->createQuery(
+			'select e, l, a
+			from Modcasts\Entities\Episode e
+			join e.theme_license l
+			join e.theme_artist a');
 		
 		$episodes = $q->execute();
 		
