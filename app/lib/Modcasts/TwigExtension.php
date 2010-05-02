@@ -11,14 +11,17 @@
 namespace Modcasts;
 
 class TwigExtension extends \Twig_Extension {
+	private $markdownParser;
+	
+	public function __construct() {
+		$this->markdownParser = new \Markdown_Parser;
+	}
+	
 	public function getFilters() {
 		return array(
 			'filesize'	=> new \Twig_Filter_Method($this, 'bytesToString'),
+			'markdown'	=> new \Twig_Filter_Method($this, 'markdown'),
 		);
-	}
-	
-	public function getName() {
-		return 'Modcasts';
 	}
 	
 	public function bytesToString($bytes) {
@@ -31,5 +34,13 @@ class TwigExtension extends \Twig_Extension {
 		$bytes /= pow(1024, $pow);
 
 		return round($bytes, 0) . ' ' . $units[$pow];
+	}
+	
+	public function markdown($input) {
+		return $this->markdownParser->transform($input);
+	}
+	
+	public function getName() {
+		return 'Modcasts';
 	}
 }

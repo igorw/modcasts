@@ -31,6 +31,8 @@ $loader->register();
 $loader = new ClassLoader('Modcasts\Controller', __DIR__ . '/app/controller', true);
 $loader->register();
 
+require __DIR__ . '/vendor/PHP_Markdown/markdown.php';
+
 
 $config = new \Doctrine\ORM\Configuration();
 $config->setMetadataCacheImpl(new \Doctrine\Common\Cache\ArrayCache);

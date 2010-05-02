@@ -4,7 +4,7 @@
 {% for episode in episodes %}
 <section class="episode" id="episode_{{ episode.id }}">
 	<h2 class="episode-title"><a href="#">#{{ episode.id }}: {{ episode.title }}</a></h2>
-	<p class="episode-date">{{ episode.created_at|date }}</p>
+	<p class="episode-date">{{ episode.created|date }}</p>
 	<p>
 		<video controls="controls">
 			<source src="data/episodes/{{ episode.id }}.mov" />
@@ -19,11 +19,7 @@
 	<p class="download-container clearfix">
 		<span class="download-link"><a href="data/episodes/{{ episode.id }}.ogv">Download</a> <span class="download-extra">({{ episode.file_bytes|filesize }})</span></span>
 	</p>
-	{% for line in episode.show_notes %}
-	<p>
-		{{ line }}
-	</p>
-	{% endfor %}
+	{{ episode.show_notes|markdown }}
 </section>
 {% endfor %}
 {% endblock %}
