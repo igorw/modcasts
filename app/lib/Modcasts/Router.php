@@ -38,7 +38,7 @@ class Router {
 				throw new FileNotFoundException;
 			}
 			
-			$actionName = (isset($parts[1]) && preg_match('#^[a-z]+$#', $parts[1])) ? (string) $parts[1] : 'index';
+			$actionName = (isset($parts[1]) && preg_match('#^[a-zA-Z]+$#', $parts[1])) ? (string) $parts[1] : 'index';
 			$method = $actionName . 'Action';
 			$reflectionClass = new \ReflectionClass($class);
 			if ( ! $reflectionClass->hasMethod($method)) {
