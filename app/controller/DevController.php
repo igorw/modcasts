@@ -16,11 +16,7 @@ use Symfony\Components\RequestHandler\Request,
 	Symfony\Components\RequestHandler\Response;
 
 class DevController extends Controller {
-	public function indexAction(Request $request) {
-		return new Response();
-	}
-	
-	public function populateAction(Request $request) {
+	public function populateAction() {
 		$episode = new \Modcasts\Entities\Episode;
 		$episode->id = 0;
 		$episode->title = 'Introducing Slave';

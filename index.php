@@ -27,5 +27,5 @@ $env = new Environment(__DIR__, $twig, $em);
 
 $request = new Request;
 
-$controller = new Controller\IndexController($env);
-echo $controller->indexAction($request);
+$router = new Router($request, $env);
+echo $router->dispatch();

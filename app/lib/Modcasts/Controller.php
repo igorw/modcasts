@@ -14,13 +14,17 @@ use Symfony\Components\RequestHandler\Request,
 	Symfony\Components\RequestHandler\Response;
 
 abstract class Controller {
+	protected $request;
 	protected $env;
 	
-	public function __construct(Environment $env) {
+	public function __construct(Request $request, Environment $env) {
+		$this->request = $request;
 		$this->env = $env;
 	}
 	
-	public function render($templateFile, $vars) {
+	public function render($templateFile, $vars = array()) {
+		$vars['basePath'] = $this->request->getBasePath() . '/';
+		
 		$template = $this->env->twig->loadTemplate($templateFile);
 		$output = $template->render($vars);
 		return new Response($output);
