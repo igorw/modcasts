@@ -27,6 +27,9 @@ class Router {
 			$requestURI = $this->request->getRequestUri();
 
 			$requestPath = substr($requestURI, strlen($basePath));
+			if (false !== ($pos = strpos($requestPath, '?'))) {
+				$requestPath = substr($requestPath, 0, $pos);
+			}
 			$parts = explode('/', $requestPath);
 
 			$controllerName = (isset($parts[0]) && preg_match('#^[a-z]+$#', $parts[0])) ? (string) $parts[0] : 'index';
