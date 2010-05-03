@@ -10,6 +10,10 @@ video {
 a {
 	color: #C72222;
 }
+input, textarea {
+	font-size: 0.8em;
+	font-family: georgia;
+}
 
 .site-title {
 	font-family: gill sans;

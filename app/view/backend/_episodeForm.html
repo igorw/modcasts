@@ -1,0 +1,57 @@
+<section>
+<p>
+<form method="post" action="{{ formAction }}" class="form">
+{% if errors %}
+<p>
+	<ul class="errors">
+	{% for error in errors %}
+		<li>{{ error }}</li>
+	{% endfor %}
+	</ul>
+</p>
+{% endif %}
+{% if displayIdField %}
+<dl>
+	<dt><label for="id">ID</label></dt>
+	<dd><input type="text" name="id" id="id" value="{{ episode.id }}" /></dd>
+</dl>
+{% endif %}
+<dl>
+	<dt><label for="title">Title</label></dt>
+	<dd><input type="text" name="title" id="title" value="{{ episode.title|e }}" class="wide-field" /></dd>
+</dl>
+<dl>
+	<dt><label for="show_notes">Show notes</label></dt>
+	<dd><textarea name="show_notes" id="show_notes" class="wide-field">{{ episode.show_notes|e }}</textarea></dd>
+</dl>
+<dl>
+	<dt><label for="theme_artist">Theme artist</label></dt>
+	<dd>
+		<select name="theme_artist" id="theme_artist">
+		{% for artist in artists %}
+			<option value="{{ artist.id }}" {% if artist == episode.theme_artist %}selected="selected"{% endif %}>{{ artist.name|e }}</option>
+		{% endfor %}
+		</select>
+	</dd>
+</dl>
+<dl>
+	<dt><label for="theme_license">Theme license</label></dt>
+	<dd>
+		<select name="theme_license" id="theme_license">
+		{% for license in licenses %}
+			<option value="{{ license.id }}" {% if license == episode.theme_license %}selected="selected"{% endif %}>{{ license.name|e }}</option>
+		{% endfor %}
+		</select>
+	</dd>
+</dl>
+<dl>
+	<dt><label for="file_bytes">File size (in bytes)</label></dt>
+	<dd><input type="text" name="file_bytes" id="file_bytes" value="{{ episode.file_bytes }}" /></dd>
+</dl>
+<dl>
+	<dt></dt>
+	<dd><input type="submit" name="submit" value="Save" /></dd>
+</dl>
+</form>
+</p>
+</section>

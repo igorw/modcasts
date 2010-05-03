@@ -1,0 +1,16 @@
+{% extends "backend/layout.html" %}
+
+{% block content %}
+<section>
+<p>
+	<a href="{{ basePath }}backend/newEpisode">New episode</a>
+</p>
+<p>
+<ul>
+{% for episode in episodes %}
+	<li><a href="{{ basePath }}backend/editEpisode/{{ episode.id }}">#{{ episode.id }}: {{ episode.title|e }}</a></li>
+{% endfor %}
+</ul>
+</p>
+</section>
+{% endblock %}

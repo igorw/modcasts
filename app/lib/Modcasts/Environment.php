@@ -14,10 +14,17 @@ class Environment {
 	public $basePath;
 	public $twig;
 	public $em;
+	public $sessionFactory;
 	
-	public function __construct($basePath, \Twig_Environment $twig, $em) {
+	public function __construct($basePath, \Twig_Environment $twig, $em, $sessionFactory) {
 		$this->basePath = (substr($basePath, -1) == '/') ? $basePath : $basePath . '/';
 		$this->twig = $twig;
 		$this->em = $em;
+		$this->sessionFactory = $sessionFactory;
+	}
+	
+	public function getSession() {
+		$factory = $this->sessionFactory;
+		return $factory();
 	}
 }

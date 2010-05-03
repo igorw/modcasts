@@ -1,0 +1,11 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<article>
+	<section>
+		<h2>Error</h2>
+		<p>An error occured.</p>
+		<p>{{ exception.message }}</p>
+	</section>
+</article>
+{% endblock %}

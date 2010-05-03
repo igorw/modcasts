@@ -1,0 +1,27 @@
+.form {
+	background: #E3E3E3;
+	border: 1px solid #C2C0C0;
+	-moz-border-radius: 5px;
+	-webkit-botder-radius: 5px;
+}
+.form dl {
+	display: table-row;
+}
+.form dl dt, .form dl dd {
+	display: table-cell;
+	padding: 5px;
+}
+.form dl dt {
+	vertical-align: top;
+}
+.form textarea {
+	width: 450px;
+	height: 150px;
+}
+.form .wide-field {
+	width: 400px;
+	border-width: 1px;
+}
+.errors {
+	color: red;
+}

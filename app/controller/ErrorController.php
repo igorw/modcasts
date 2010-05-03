@@ -24,6 +24,12 @@ class ErrorController extends Controller {
 		$this->exception = $exception;
 	}
 	
+	public function exceptionAction() {
+		return $this->render('error/exception.html', array(
+			'exception'	=> $this->exception,
+		));
+	}
+	
 	public function fileNotFoundAction() {
 		return $this->render('error/404.html');
 	}

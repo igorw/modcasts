@@ -9,3 +9,4 @@ modcasts is a site with screencasts on phpBB modding.
 * RSS/Atom feed
 * backend
 * comments (gravatar?)
+* csrf protection

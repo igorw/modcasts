@@ -18,11 +18,11 @@ use Symfony\Components\RequestHandler\Request,
 class IndexController extends Controller {
 	public function indexAction() {
 		$q = $this->env->em->createQuery(
-			'select e, l, a
+			'select e, a, l
 			from Modcasts\Entities\Episode e
+			join e.theme_artist a
 			join e.theme_license l
-			join e.theme_artist a');
-		
+			order by e.id desc');
 		$episodes = $q->execute();
 		
 		return $this->render('index.html', array(
@@ -32,15 +32,14 @@ class IndexController extends Controller {
 	
 	public function episodeAction($id) {
 		$q = $this->env->em->createQuery(
-			'select e, l, a
+			'select e, a, l
 			from Modcasts\Entities\Episode e
-			join e.theme_license l
 			join e.theme_artist a
+			join e.theme_license l
 			where e.id = ?1');
-
 		$episode = array_shift($q->execute(array(1 => $id)));
 		
-		if (!$episode) {
+		if ( ! $episode) {
 			throw new \Modcasts\FileNotFoundException;
 		}
 		

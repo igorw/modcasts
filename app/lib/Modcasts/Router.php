@@ -10,7 +10,8 @@
 
 namespace Modcasts;
 
-use Symfony\Components\RequestHandler\Request;
+use Symfony\Components\RequestHandler\Request,
+	Symfony\Components\RequestHandler\Response;
 
 class Router {
 	private $request;
@@ -50,9 +51,21 @@ class Router {
 			$controller = $reflectionClass->newInstance($this->request, $this->env);
 			
 			return $controller->$method($resource);
+		} catch (RedirectException $e) {
+			return $this->redirect($this->request->getBasePath() . '/' . $e->getURL());
 		} catch (FileNotFoundException $e) {
 			$controller = new Controller\ErrorController($this->request, $this->env, $e);
 			return $controller->fileNotFoundAction();
+		} catch (\Exception $e) {
+			$controller = new Controller\ErrorController($this->request, $this->env, $e);
+			return $controller->exceptionAction();
 		}
+	}
+	
+	public function redirect($url) {
+		$response = new Response;
+		$response->setStatusCode(302);
+		$response->setHeader('Location', $url);
+		return $response;
 	}
 }

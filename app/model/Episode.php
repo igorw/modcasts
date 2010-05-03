@@ -30,4 +30,23 @@ class Episode {
 	public function __construct() {
 		$this->created = new \DateTime("now");
 	}
+	
+	public function validate() {
+		$errors = array();
+		
+		if ( ! $this->title) {
+			$errors[] = 'Please enter a title';
+		}
+		if ( ! $this->show_notes) {
+			$errors[] = 'Please enter show notes';
+		}
+		if ( ! $this->theme_artist) {
+			$errors[] = 'Invalid theme artist specified';
+		}
+		if ( ! $this->theme_license) {
+			$errors[] = 'Invalid theme license specified';
+		}
+		
+		return $errors;
+	}
 }

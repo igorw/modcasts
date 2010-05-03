@@ -12,6 +12,8 @@ namespace Modcasts;
 
 use Symfony\Components\RequestHandler\Request;
 
+use Symfony\Framework\WebBundle\Session\NativeSession;
+
 use Twig_Environment,
 	Twig_Loader_Filesystem;
 
@@ -23,7 +25,13 @@ $twig = new Twig_Environment(new Twig_Loader_Filesystem('app/view'), array(
 ));
 $twig->addExtension(new TwigExtension());
 
-$env = new Environment(__DIR__, $twig, $em);
+$sessionFactory = function() {
+	return new NativeSession(array(
+		'session_name'	=> 'MODCASTS_SESSION',
+	));
+};
+
+$env = new Environment(__DIR__, $twig, $em, $sessionFactory);
 
 $request = new Request;
 

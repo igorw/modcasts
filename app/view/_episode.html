@@ -1,5 +1,5 @@
 <section class="episode" id="episode_{{ episode.id }}">
-	<h2 class="episode-title"><a href="{{ basePath }}index/episode/{{ episode.id }}">#{{ episode.id }}: {{ episode.title }}</a></h2>
+	<h2 class="episode-title"><a href="{{ basePath }}index/episode/{{ episode.id }}">#{{ episode.id }}: {{ episode.title|e }}</a></h2>
 	<p class="episode-date">{{ episode.created|date }}</p>
 	<p>
 		<video controls="controls">
@@ -9,8 +9,8 @@
 		</video>
 	</p>
 	<p class="theme-music">
-		Theme music: <a rel="cc:attributionURL" property="cc:attributionName" href="{{ episode.theme_artist.website }}">{{ episode.theme_artist.name }}</a><br />
-		<a rel="license" href="{{ episode.theme_license.url }}">{{ episode.theme_license.name }}</a>
+		Theme music: <a rel="cc:attributionURL" property="cc:attributionName" href="{{ episode.theme_artist.website }}">{{ episode.theme_artist.name|e }}</a><br />
+		<a rel="license" href="{{ episode.theme_license.url }}">{{ episode.theme_license.name|e }}</a>
 	</p>
 	<p class="download-container clearfix">
 		<span class="download-link"><a href="{{ basePath }}data/episodes/{{ episode.id }}.ogv">Download</a> <span class="download-extra">({{ episode.file_bytes|filesize }})</span></span>
