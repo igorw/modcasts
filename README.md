@@ -17,3 +17,5 @@ modcasts is a site with screencasts on phpBB modding.
 * comments (gravatar?)
 * csrf protection
 * password salting
+* backend nav
+* pagination
