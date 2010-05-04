@@ -38,7 +38,7 @@ class BackendController extends Controller {
 		
 		return $this->render('backend/listEpisodes.html', array(
 			'episodes'		=> $episodes,
-			'csrfTokenFactory'	=> new \Modcasts\CSRFTokenFactory($this->env->appConfig['csrfToken']),
+			'csrfTokenFactory'	=> new \Modcasts\CSRFTokenFactory($this->env->appConfig['csrfSecret']),
 		));
 	}
 	

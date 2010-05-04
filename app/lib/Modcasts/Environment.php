@@ -31,6 +31,6 @@ class Environment {
 	}
 	
 	public function getCSRFToken($formName, $created = null) {
-		return new CSRFToken($formName, $this->appConfig['csrfToken'], $created);
+		return new CSRFToken($formName, $this->appConfig['csrfSecret'], $created);
 	}
 }

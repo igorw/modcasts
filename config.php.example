@@ -14,5 +14,5 @@ return array(
 		'dbname'	=> 'modcasts',
 		'user'		=> 'root',
 	),
-	'csrfToken'		=> 'secret',
+	'csrfSecret'	=> 'secret',
 );
