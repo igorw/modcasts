@@ -8,7 +8,7 @@
 <p>
 <ul>
 {% for episode in episodes %}
-	<li><a href="{{ basePath }}backend/editEpisode/{{ episode.id }}">#{{ episode.id }}: {{ episode.title|e }}</a></li>
+	<li><a href="{{ basePath }}backend/editEpisode/{{ episode.id }}">#{{ episode.id }}: {{ episode.title|e }}</a> [<a href="{{ basePath }}backend/deleteEpisode/{{ episode.id }}">Delete</a>]</li>
 {% endfor %}
 </ul>
 </p>

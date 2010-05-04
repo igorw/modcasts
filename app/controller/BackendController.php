@@ -119,6 +119,20 @@ class BackendController extends Controller {
 		return $errors;
 	}
 	
+	public function deleteEpisodeAction($id) {
+		$this->loginCheckAndRedirect();
+		
+		$episode = $this->env->em->find('Modcasts\Entities\Episode', $id);
+		
+		if ( ! $episode) {
+			throw new \Modcasts\FileNotFoundException;
+		}
+		
+		$this->env->em->remove($episode);
+		$this->env->em->flush();
+		throw new \Modcasts\RedirectException('backend/listEpisodes');
+	}
+	
 	public function loginAction() {
 		if ($this->isLoggedIn()) {
 			throw new \Exception("You are already logged in.");
