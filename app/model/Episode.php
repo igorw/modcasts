@@ -10,7 +10,7 @@
 
 namespace Modcasts\Entities;
 
-/** @Entity */
+/** @Entity(repositoryClass="Modcasts\Entities\Repository\EpisodeRepository") */
 class Episode {
 	/** @Id @Column(type="integer") */
 	public $id;
@@ -29,6 +29,34 @@ class Episode {
 	
 	public function __construct() {
 		$this->created = new \DateTime("now");
+	}
+	
+	public function getId() {
+		return $this->id;
+	}
+	
+	public function getTitle() {
+		return $this->title;
+	}
+	
+	public function getCreated() {
+		return $this->created;
+	}
+	
+	public function getShowNotes() {
+		return $this->show_notes;
+	}
+	
+	public function getFileBytes() {
+		return $this->file_bytes;
+	}
+	
+	public function getThemeArtist() {
+		return $this->theme_artist;
+	}
+	
+	public function getThemeLicense() {
+		return $this->theme_license;
 	}
 	
 	public function validate() {

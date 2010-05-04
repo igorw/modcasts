@@ -26,4 +26,24 @@ class Account {
 	public function __construct() {
 		$this->created = new \DateTime("now");
 	}
+	
+	public function getId() {
+		return $this->id;
+	}
+	
+	public function getUsername() {
+		return $this->username;
+	}
+	
+	public function getRealname() {
+		return $this->realname;
+	}
+	
+	public function getPassword() {
+		return $this->password;
+	}
+	
+	public function getCreated() {
+		return $this->created;
+	}
 }

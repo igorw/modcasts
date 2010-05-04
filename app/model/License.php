@@ -18,4 +18,16 @@ class License {
 	public $name;
 	/** @Column(length=255) */
 	public $url;
+	
+	public function getId() {
+		return $this->id;
+	}
+	
+	public function getName() {
+		return $this->name;
+	}
+	
+	public function getUrl() {
+		return $this->url;
+	}
 }
