@@ -9,7 +9,7 @@
 <p>
 <ul>
 {% for episode in episodes %}
-	<li><a href="{{ basePath }}backend/editEpisode/{{ episode.id }}">#{{ episode.id }}: {{ episode.title|e }}</a> [<a href="{{ basePath }}backend/deleteEpisode/{{ episode.id }}">Delete</a>]</li>
+	<li><a href="{{ basePath }}backend/editEpisode/{{ episode.id }}">#{{ episode.id }}: {{ episode.title|e }}</a> [<a href="{{ basePath }}backend/deleteEpisode/{{ episode.id }}?csrfCreated={{ csrfTokenFactory.token('backend/deleteEpisode/' ~ episode.id).created }}&amp;csrfHash={{ csrfTokenFactory.token('backend/deleteEpisode/' ~ episode.id).hash|e }}">Delete</a>]</li>
 {% endfor %}
 </ul>
 </p>

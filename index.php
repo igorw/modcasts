@@ -31,7 +31,7 @@ $sessionFactory = function() {
 	));
 };
 
-$env = new Environment(__DIR__, $twig, $em, $sessionFactory);
+$env = new Environment(__DIR__, $twig, $em, $sessionFactory, $appConfig);
 
 $request = new Request;
 

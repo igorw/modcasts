@@ -37,7 +37,8 @@ class BackendController extends Controller {
 		$episodes = $repository->findAllDesc();
 		
 		return $this->render('backend/listEpisodes.html', array(
-			'episodes'	=> $episodes,
+			'episodes'		=> $episodes,
+			'csrfTokenFactory'	=> new \Modcasts\CSRFTokenFactory($this->env->appConfig['csrfToken']),
 		));
 	}
 	
@@ -57,8 +58,16 @@ class BackendController extends Controller {
 		
 		$errors = array();
 		
+		$csrfToken = $this->env->getCSRFToken('backend/editEpisode/' . $episode->id,
+			$this->request->get('csrfCreated'));
+		
 		if ($this->request->get('submit')) {
-			$errors = $this->processCheckAndPersistEpisode($episode);
+			if ( ! $csrfToken->check($this->request->get('csrfHash'))) {
+				$errors[] = 'Please resubmit the form';
+			}
+			
+			$errors = array_merge($errors,
+				$this->processCheckAndPersistEpisode($episode));
 		}
 		
 		return $this->render('backend/editEpisode.html', array(
@@ -67,6 +76,8 @@ class BackendController extends Controller {
 			'artists'		=> $artists,
 			'licenses'		=> $licenses,
 			'errors'		=> $errors,
+			'csrfCreated'		=> $csrfToken->getCreated(),
+			'csrfHash'		=> $csrfToken->getHash(),
 		));
 	}
 	
@@ -84,8 +95,16 @@ class BackendController extends Controller {
 		
 		$errors = array();
 		
+		$csrfToken = $this->env->getCSRFToken('backend/newEpisode',
+			$this->request->get('csrfCreated'));
+		
 		if ($this->request->get('submit')) {
-			$errors = $this->processCheckAndPersistEpisode($episode);
+			if ( ! $csrfToken->check($this->request->get('csrfHash'))) {
+				$errors[] = 'Please resubmit the form';
+			}
+			
+			$errors = array_merge($errors,
+				$this->processCheckAndPersistEpisode($episode));
 		}
 		
 		return $this->render('backend/newEpisode.html', array(
@@ -95,6 +114,8 @@ class BackendController extends Controller {
 			'artists'		=> $artists,
 			'licenses'		=> $licenses,
 			'errors'		=> $errors,
+			'csrfCreated'		=> $csrfToken->getCreated(),
+			'csrfHash'		=> $csrfToken->getHash(),
 		));
 	}
 	
@@ -126,6 +147,12 @@ class BackendController extends Controller {
 		
 		if ( ! $episode) {
 			throw new \Modcasts\FileNotFoundException;
+		}
+		
+		$csrfToken = $this->env->getCSRFToken('backend/deleteEpisode/' . $episode->id,
+			$this->request->get('csrfCreated'));
+		if ( ! $csrfToken->check($this->request->get('csrfHash'))) {
+			throw new \Exception('Please try again.');
 		}
 		
 		$this->env->em->remove($episode);
