@@ -178,6 +178,15 @@ class BackendController extends Controller {
 		return $this->session->read('account_id');
 	}
 	
+	public function logoutAction() {
+		if ( ! $this->isLoggedIn()) {
+			throw new \Exception("You are not logged in.");
+		}
+		
+		$this->session->write('account_id', null);
+		throw new \Modcasts\RedirectException('');
+	}
+	
 	public function findArtist($id) {
 		$artist = $this->env->em->find('Modcasts\Entities\Artist', $id);
 		return $artist;
