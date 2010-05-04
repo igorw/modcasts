@@ -162,8 +162,8 @@ class BackendController extends Controller {
 	public function authenticate($username, $password) {
 		$repository = $this->env->em->getRepository('Modcasts\Entities\Account');
 		$account = $repository->findOneBy(array(
-			1	=> $username,
-			2	=> hash('sha256', $password),
+			'username'	=> $username,
+			'password'	=> hash('sha256', $password),
 		));
 		return $account;
 	}
