@@ -15,11 +15,22 @@ use Doctrine\ORM\EntityRepository;
 class EpisodeRepository extends EntityRepository {
 	public function findAllDesc() {
 		$qb = $this->createQueryBuilder('e')
-			->select('e, a, l')
-			->join('e.theme_artist', 'a')
-			->join('e.theme_license', 'l')
 			->orderBy('e.id', 'DESC');
 		$q = $qb->getQuery();
 		return $q->execute();
+	}
+	
+	public function getNextId() {
+		$qb = $this->createQueryBuilder('e')
+			->select('partial e.{id}')
+			->orderBy('e.id', 'DESC');
+		$q = $qb->getQuery();
+		$episode = array_shift($q->setMaxResults(1)->execute());
+		
+		if ($episode === null) {
+			return 0;
+		}
+		
+		return $episode->id + 1;
 	}
 }

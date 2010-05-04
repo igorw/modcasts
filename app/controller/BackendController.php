@@ -33,13 +33,8 @@ class BackendController extends Controller {
 	public function listEpisodesAction() {
 		$this->loginCheckAndRedirect();
 		
-		$q = $this->env->em->createQuery(
-			'select e, a, l
-			from Modcasts\Entities\Episode e
-			join e.theme_artist a
-			join e.theme_license l
-			order by e.id desc');
-		$episodes = $q->execute();
+		$repository = $this->env->em->getRepository('Modcasts\Entities\Episode');
+		$episodes = $repository->findAllDesc();
 		
 		return $this->render('backend/listEpisodes.html', array(
 			'episodes'	=> $episodes,
@@ -49,20 +44,16 @@ class BackendController extends Controller {
 	public function editEpisodeAction($id) {
 		$this->loginCheckAndRedirect();
 		
-		$q = $this->env->em->createQuery(
-			'select e, a, l
-			from Modcasts\Entities\Episode e
-			join e.theme_artist a
-			join e.theme_license l
-			where e.id = ?1');
-		$episode = array_shift($q->execute(array(1 => $id)));
+		$episode = $this->env->em->find('Modcasts\Entities\Episode', $id);
 		
 		if ( ! $episode) {
 			throw new \Modcasts\FileNotFoundException;
 		}
 		
-		$artists = $this->findAllArtists();
-		$licenses = $this->findAllLicenses();
+		$artists = $this->env->em->getRepository('Modcasts\Entities\Artist')
+			->findAll();
+		$licenses = $this->env->em->getRepository('Modcasts\Entities\License')
+			->findAll();
 		
 		$errors = array();
 		
@@ -83,10 +74,13 @@ class BackendController extends Controller {
 		$this->loginCheckAndRedirect();
 		
 		$episode = new \Modcasts\Entities\Episode;
-		$episode->id = $this->nextEpisodeId();
+		$episode->id = $this->env->em->getRepository('Modcasts\Entities\Episode')
+			->getNextId();
 		
-		$artists = $this->findAllArtists();
-		$licenses = $this->findAllLicenses();
+		$artists = $this->env->em->getRepository('Modcasts\Entities\Artist')
+			->findAll();
+		$licenses = $this->env->em->getRepository('Modcasts\Entities\License')
+			->findAll();
 		
 		$errors = array();
 		
@@ -102,20 +96,6 @@ class BackendController extends Controller {
 			'licenses'		=> $licenses,
 			'errors'		=> $errors,
 		));
-	}
-	
-	public function nextEpisodeId() {
-		$q = $this->env->em->createQuery(
-			'select partial e.{id}
-			from Modcasts\Entities\Episode e
-			order by e.id desc');
-		$episode = array_shift($q->setMaxResults(1)->execute());
-		
-		if ($episode === null) {
-			return 0;
-		}
-		
-		return $episode->id + 1;
 	}
 	
 	public function processCheckAndPersistEpisode($episode) {
@@ -166,16 +146,11 @@ class BackendController extends Controller {
 	}
 	
 	public function authenticate($username, $password) {
-		$q = $this->env->em->createQuery(
-			'select a
-			from Modcasts\Entities\Account a
-			where a.username = ?1
-			and a.password = ?2');
-		$account = array_shift($q->execute(array(
+		$repository = $this->env->em->getRepository('Modcasts\Entities\Account');
+		$account = $repository->findOneBy(array(
 			1	=> $username,
 			2	=> hash('sha256', $password),
-		)));
-		
+		));
 		return $account;
 	}
 	
@@ -189,39 +164,13 @@ class BackendController extends Controller {
 		return $this->session->read('account_id');
 	}
 	
-	public function findAllArtists() {
-		$q = $this->env->em->createQuery(
-			'select a
-			from Modcasts\Entities\Artist a
-			order by a.name');
-		$artists = $q->execute();
-		return $artists;
-	}
-	
-	public function findAllLicenses() {
-		$q = $this->env->em->createQuery(
-			'select l
-			from Modcasts\Entities\License l
-			order by l.name');
-		$artists = $q->execute();
-		return $artists;
-	}
-	
 	public function findArtist($id) {
-		$q = $this->env->em->createQuery(
-			'select a
-			from Modcasts\Entities\Artist a
-			where a.id = ?1');
-		$artist = array_shift($q->execute(array(1 => $id)));
+		$artist = $this->env->em->find('Modcasts\Entities\Artist', $id);
 		return $artist;
 	}
 	
 	public function findLicense($id) {
-		$q = $this->env->em->createQuery(
-			'select l
-			from Modcasts\Entities\License l
-			where l.id = ?1');
-		$license = array_shift($q->execute(array(1 => $id)));
+		$license = $this->env->em->find('Modcasts\Entities\License', $id);
 		return $license;
 	}
 }
