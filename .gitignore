@@ -1,5 +1,6 @@
 .DS_Store
 .htaccess
 cache/**/*.php
+config.php
 *.mov
 *.ogv

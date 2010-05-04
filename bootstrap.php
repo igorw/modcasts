@@ -45,10 +45,7 @@ $loader->register();
 $config->setProxyDir(__DIR__ . '/cache/doctrine');
 $config->setProxyNamespace('Modcasts\Proxy');
 
-$connectionOptions = array(
-	'driver'	=> 'pdo_mysql',
-	'dbname'	=> 'modcasts',
-	'user'		=> 'root',
-);
+$appConfig = require __DIR__ . '/config.php';
+$connectionOptions = $appConfig['connectionOptions'];
 
 $em = \Doctrine\ORM\EntityManager::create($connectionOptions, $config);
