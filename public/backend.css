@@ -1,3 +1,9 @@
+nav {
+	float: right;
+	position: relative;
+	bottom: 70px;
+}
+
 .form {
 	background: #E3E3E3;
 	border: 1px solid #C2C0C0;
