@@ -135,7 +135,7 @@ class BackendController extends Controller {
 	
 	public function loginAction() {
 		if ($this->isLoggedIn()) {
-			throw new \Exception("You are already logged in.");
+			throw new \Modcasts\RedirectException('backend');
 		}
 		
 		$username = '';
@@ -180,7 +180,7 @@ class BackendController extends Controller {
 	
 	public function logoutAction() {
 		if ( ! $this->isLoggedIn()) {
-			throw new \Exception("You are not logged in.");
+			throw new \Modcasts\RedirectException('');
 		}
 		
 		$this->session->write('account_id', null);
