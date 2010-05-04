@@ -21,7 +21,7 @@ class Episode {
 	/** @Column(type="text") */
 	public $show_notes;
 	/** @Column(type="integer") */
-	public $file_bytes;
+	public $file_bytes = 0;
 	/** @OneToOne(targetEntity="Artist") */
 	public $theme_artist;
 	/** @OneToOne(targetEntity="License") */
