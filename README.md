@@ -27,3 +27,4 @@ modcasts is a site with screencasts on phpBB modding.
 * PHPUnit tests?
 * Symfony DI container
 * search (lucene)
+* add timeout to csrf token
