@@ -12,7 +12,7 @@ modcasts is a site with screencasts on phpBB modding.
 
 # install
 
-1. rename example.config.php to config.php and adjust it
+1. adjust configuration in services.yml
 2. initialize the db with ./doctrine orm:schem-tool:create
 3. PROFIT!
 

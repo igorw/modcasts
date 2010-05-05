@@ -31,21 +31,14 @@ $loader->register();
 $loader = new ClassLoader('Modcasts\Controller', __DIR__ . '/app/controller', true);
 $loader->register();
 
+$loader = new ClassLoader('Modcasts\Proxy', __DIR__ . '/cache/doctrine', true);
+$loader->register();
+
 require __DIR__ . '/vendor/PHP_Markdown/markdown.php';
 
 
-$config = new \Doctrine\ORM\Configuration();
-$config->setMetadataCacheImpl(new \Doctrine\Common\Cache\ArrayCache);
-$driverImpl = $config->newDefaultAnnotationDriver(array(__DIR__."/app/model"));
-$config->setMetadataDriverImpl($driverImpl);
+$container = new \Symfony\Components\DependencyInjection\Builder;
+$loader = new \Symfony\Components\DependencyInjection\Loader\YamlFileLoader;
+$container->merge($loader->load(__DIR__ . '/services.yml'));
 
-$loader = new \Modcasts\ClassLoader('Modcasts\Proxy', __DIR__ . '/cache/doctrine', true);
-$loader->register();
-
-$config->setProxyDir(__DIR__ . '/cache/doctrine');
-$config->setProxyNamespace('Modcasts\Proxy');
-
-$appConfig = require __DIR__ . '/config.php';
-$connectionOptions = $appConfig['connectionOptions'];
-
-$em = \Doctrine\ORM\EntityManager::create($connectionOptions, $config);
+$em = $container->getService('doctrine.orm.entity_manager');

@@ -16,10 +16,14 @@ class CSRFTokenFactory {
 	
 	public function __construct($secretToken, $created = null) {
 		$this->secretToken = $secretToken;
+		$this->setCreated($created);
+	}
+	
+	public function setCreated($created) {
 		$this->created = $created ? $created : time();
 	}
 	
-	public function getToken($formName) {
-		return new CSRFToken($formName, $this->secretToken, $this->created);
+	public function getToken($formName, $created = null) {
+		return new CSRFToken($formName, $this->secretToken, $created ? $created : $this->created);
 	}
 }

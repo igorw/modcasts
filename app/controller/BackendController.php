@@ -21,7 +21,7 @@ class BackendController extends Controller {
 	
 	public function __construct(Request $request, Environment $env) {
 		parent::__construct($request, $env);
-		$this->session = $this->env->getSession();
+		$this->session = $this->env->container->session;
 	}
 	
 	public function indexAction() {
@@ -38,7 +38,7 @@ class BackendController extends Controller {
 		
 		return $this->render('backend/listEpisodes.html', array(
 			'episodes'		=> $episodes,
-			'csrfTokenFactory'	=> new \Modcasts\CSRFTokenFactory($this->env->appConfig['csrfSecret']),
+			'csrfTokenFactory'	=> $this->env->container->csrf_token_factory,
 		));
 	}
 	
@@ -58,7 +58,8 @@ class BackendController extends Controller {
 		
 		$errors = array();
 		
-		$csrfToken = $this->env->getCSRFToken('backend/editEpisode/' . $episode->id,
+		$csrfTokenFactory = $this->env->container->csrf_token_factory;
+		$csrfToken = $csrfTokenFactory->getToken('backend/editEpisode/' . $episode->id,
 			$this->request->get('csrfCreated'));
 		
 		if ($this->request->get('submit')) {
@@ -95,7 +96,8 @@ class BackendController extends Controller {
 		
 		$errors = array();
 		
-		$csrfToken = $this->env->getCSRFToken('backend/newEpisode',
+		$csrfTokenFactory = $this->env->container->csrf_token_factory;
+		$csrfToken = $csrfTokenFactory->getToken('backend/newEpisode',
 			$this->request->get('csrfCreated'));
 		
 		if ($this->request->get('submit')) {
@@ -149,7 +151,8 @@ class BackendController extends Controller {
 			throw new \Modcasts\FileNotFoundException;
 		}
 		
-		$csrfToken = $this->env->getCSRFToken('backend/deleteEpisode/' . $episode->id,
+		$csrfTokenFactory = $this->env->container->csrf_token_factory;
+		$csrfToken = $csrfTokenFactory->getToken('backend/deleteEpisode/' . $episode->id,
 			$this->request->get('csrfCreated'));
 		if ( ! $csrfToken->check($this->request->get('csrfHash'))) {
 			throw new \Exception('Please try again.');

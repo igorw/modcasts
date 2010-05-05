@@ -10,27 +10,16 @@
 
 namespace Modcasts;
 
+use Symfony\Components\DependencyInjection\ContainerInterface;
+
 class Environment {
-	public $basePath;
+	public $container;
 	public $twig;
 	public $em;
-	public $sessionFactory;
-	public $appConfig;
 	
-	public function __construct($basePath, \Twig_Environment $twig, $em, $sessionFactory, $appConfig) {
-		$this->basePath = (substr($basePath, -1) == '/') ? $basePath : $basePath . '/';
-		$this->twig = $twig;
-		$this->em = $em;
-		$this->sessionFactory = $sessionFactory;
-		$this->appConfig = $appConfig;
-	}
-	
-	public function getSession() {
-		$factory = $this->sessionFactory;
-		return $factory();
-	}
-	
-	public function getCSRFToken($formName, $created = null) {
-		return new CSRFToken($formName, $this->appConfig['csrfSecret'], $created);
+	public function __construct(ContainerInterface $container) {
+		$this->container = $container;
+		$this->twig = $this->container->twig;
+		$this->em = $this->container->getService('doctrine.orm.entity_manager');
 	}
 }
