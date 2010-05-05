@@ -35,6 +35,7 @@ $loader = new ClassLoader('Modcasts\Proxy', __DIR__ . '/cache/doctrine', true);
 $loader->register();
 
 require __DIR__ . '/vendor/PHP_Markdown/markdown.php';
+require __DIR__ . '/vendor/UUID/UUID.php';
 
 
 $container = new \Symfony\Components\DependencyInjection\Builder;

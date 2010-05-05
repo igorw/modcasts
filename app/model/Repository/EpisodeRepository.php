@@ -20,6 +20,15 @@ class EpisodeRepository extends EntityRepository {
 		return $q->execute();
 	}
 	
+	public function getLatestUpdatedTime() {
+		$qb = $this->createQueryBuilder('e')
+			->select('partial e.{id,updated}')
+			->orderBy('e.updated', 'DESC');
+		$q = $qb->getQuery();
+		$episode = array_shift($q->setMaxResults(1)->execute());
+		return $episode->updated;
+	}
+	
 	public function getNextId() {
 		$qb = $this->createQueryBuilder('e')
 			->select('partial e.{id}')

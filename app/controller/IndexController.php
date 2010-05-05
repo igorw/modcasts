@@ -36,4 +36,36 @@ class IndexController extends Controller {
 			'episode'	=> $episode,
 		));
 	}
+	
+	public function feedAction() {
+		$repository = $this->container->em->getRepository('Modcasts\Entities\Episode');
+		$episodes = $repository->findAllDesc();
+		
+		$feed = new \Modcasts\Feed\Feed;
+		$feed->title = 'modcasts';
+		$feed->link = $this->request->getScheme() . '://' .
+			$this->request->getHttpHost() . $this->request->getBaseUrl();
+		$feed->updated = $repository->getLatestUpdatedTime();
+		$feed->authors[] = new \Modcasts\Feed\Author('Igor Wiedler');
+		
+		foreach ($episodes as $episode) {
+			$item = new \Modcasts\Feed\FeedItem;
+			$item->id = $episode->id;
+			$item->title = $episode->title;
+			$item->link = $this->request->getScheme() . '://' .
+				$this->request->getHttpHost() . $this->request->getBaseUrl() .
+				'index/episode/' . $episode->id;
+			$item->updated = $episode->updated;
+			$item->summary = $episode->show_notes;
+			
+			$feed->entries[] = $item;
+		}
+		
+		$writer = new \Modcasts\Feed\Writer\Atom($feed);
+		
+		$response = new Response;
+		$response->setHeader('Content-Type', $writer->getContentType());
+		$response->setContent($writer->dump());
+		return $response;
+	}
 }
