@@ -3,5 +3,6 @@
 .sass-cache
 cache/**/*.php
 config.php
+public/*.css
 *.mov
 *.ogv
