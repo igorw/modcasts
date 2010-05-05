@@ -3,6 +3,7 @@ imports:
   - { resource: twig.yml, class: Symfony\Components\DependencyInjection\Loader\YamlFileLoader }
 
 parameters:
+  csrf_token.secret: secret
 
 services:
   request:
