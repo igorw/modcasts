@@ -1,33 +1,10 @@
 parameters:
-  base_path: .
-  csrf_token.secret: secret
   doctrine.dbal.connection.options:
     driver: pdo_mysql
     dbname: modcasts
     user: root
 
 services:
-  twig: @twig.environment
-  twig.environment:
-    class: Twig_Environment
-    arguments: [@twig.loader, { cache: cache/twig, debug: true }]
-    calls:
-      - [addExtension, [@twig.extension]]
-  twig.loader:
-    class: Twig_Loader_Filesystem
-    arguments: [app/view]
-  twig.extension:
-    class: Modcasts\TwigExtension
-  request:
-    class: Symfony\Components\RequestHandler\Request
-  response:
-    class: Symfony\Components\RequestHandler\Response
-  session:
-    class: Symfony\Framework\WebBundle\Session\NativeSession
-    arguments: [{ session_name: MODCASTS_SESSION }]
-  csrf_token_factory:
-    class: Modcasts\CSRFTokenFactory
-    arguments: [%csrf_token.secret%]
   em: @doctrine.orm.entity_manager
   doctrine.orm.entity_manager:
     class: Doctrine\ORM\EntityManager

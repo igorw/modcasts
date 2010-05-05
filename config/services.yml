@@ -1,0 +1,17 @@
+imports:
+  - { resource: doctrine.yml, class: Symfony\Components\DependencyInjection\Loader\YamlFileLoader }
+  - { resource: twig.yml, class: Symfony\Components\DependencyInjection\Loader\YamlFileLoader }
+
+parameters:
+
+services:
+  request:
+    class: Symfony\Components\RequestHandler\Request
+  response:
+    class: Symfony\Components\RequestHandler\Response
+  session:
+    class: Symfony\Framework\WebBundle\Session\NativeSession
+    arguments: [{ session_name: MODCASTS_SESSION }]
+  csrf_token_factory:
+    class: Modcasts\CSRFTokenFactory
+    arguments: [%csrf_token.secret%]

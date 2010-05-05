@@ -39,6 +39,4 @@ require __DIR__ . '/vendor/PHP_Markdown/markdown.php';
 
 $container = new \Symfony\Components\DependencyInjection\Builder;
 $loader = new \Symfony\Components\DependencyInjection\Loader\YamlFileLoader;
-$container->merge($loader->load(__DIR__ . '/services.yml'));
-
-$em = $container->em;
+$container->merge($loader->load(__DIR__ . '/config/services.yml'));
