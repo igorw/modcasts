@@ -9,6 +9,7 @@ modcasts is a site with screencasts on phpBB modding.
 * doctrine 2
 * symfony 2 (some components)
 * twig
+* sass
 
 # install
 
