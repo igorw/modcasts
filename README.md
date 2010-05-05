@@ -26,3 +26,4 @@ modcasts is a site with screencasts on phpBB modding.
 * pagination
 * PHPUnit tests?
 * Symfony DI container
+* search (lucene)
