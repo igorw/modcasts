@@ -15,9 +15,7 @@ modcasts is a site with screencasts on phpBB modding.
 
 1. adjust configuration in config/*.yml
 2. initialize the db with ./doctrine orm:schem-tool:create
-3. compile css with
-    * sass public/style.sass public/style.css
-    * sass public/backend.sass public/backend.css
+3. compile css with develop/compile-css.sh
 4. PROFIT!
 
 # todo
