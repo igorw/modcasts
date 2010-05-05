@@ -20,6 +20,6 @@ class Environment {
 	public function __construct(ContainerInterface $container) {
 		$this->container = $container;
 		$this->twig = $this->container->twig;
-		$this->em = $this->container->getService('doctrine.orm.entity_manager');
+		$this->em = $this->container->em;
 	}
 }
