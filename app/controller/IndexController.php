@@ -17,7 +17,7 @@ use Symfony\Components\RequestHandler\Request,
 
 class IndexController extends Controller {
 	public function indexAction() {
-		$repository = $this->env->em->getRepository('Modcasts\Entities\Episode');
+		$repository = $this->container->em->getRepository('Modcasts\Entities\Episode');
 		$episodes = $repository->findAllDesc();
 		
 		return $this->render('index.html', array(
@@ -26,7 +26,7 @@ class IndexController extends Controller {
 	}
 	
 	public function episodeAction($id) {
-		$episode = $this->env->em->find('Modcasts\Entities\Episode', $id);
+		$episode = $this->container->em->find('Modcasts\Entities\Episode', $id);
 		
 		if ( ! $episode) {
 			throw new \Modcasts\FileNotFoundException;

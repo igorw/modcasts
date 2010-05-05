@@ -10,17 +10,18 @@
 
 namespace Modcasts\Controller;
 
-use Modcasts\Controller,
-	Modcasts\Environment;
+use Modcasts\Controller;
 
 use Symfony\Components\RequestHandler\Request,
 	Symfony\Components\RequestHandler\Response;
 
+use Symfony\Components\DependencyInjection\ContainerInterface as Container;
+
 class ErrorController extends Controller {
 	private $exception;
 	
-	public function __construct(Request $request, Environment $env, \Exception $exception = null) {
-		parent::__construct($request, $env);
+	public function __construct(Request $request, Container $container, \Exception $exception = null) {
+		parent::__construct($request, $container);
 		$this->exception = $exception;
 	}
 	

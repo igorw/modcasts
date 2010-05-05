@@ -10,16 +10,9 @@
 
 namespace Modcasts;
 
-use Symfony\Framework\WebBundle\Session\NativeSession;
-
-use Twig_Environment,
-	Twig_Loader_Filesystem;
-
 require __DIR__ . '/bootstrap.php';
-
-$env = new Environment($container);
 
 $request = $container->request;
 
-$router = new Router($request, $env);
+$router = new Router($request, $container);
 echo $router->dispatch();

@@ -13,13 +13,15 @@ namespace Modcasts;
 use Symfony\Components\RequestHandler\Request,
 	Symfony\Components\RequestHandler\Response;
 
+use Symfony\Components\DependencyInjection\ContainerInterface as Container;
+
 class Router {
 	private $request;
-	private $env;
+	private $container;
 	
-	public function __construct(Request $request, Environment $env) {
+	public function __construct(Request $request, Container $container) {
 		$this->request = $request;
-		$this->env = $env;
+		$this->container = $container;
 	}
 	
 	public function dispatch() {
@@ -48,16 +50,16 @@ class Router {
 			
 			$resource = (isset($parts[2]) && is_numeric($parts[2])) ? (int) $parts[2] : null;
 			
-			$controller = $reflectionClass->newInstance($this->request, $this->env);
+			$controller = $reflectionClass->newInstance($this->request, $this->container);
 			
 			return $controller->$method($resource);
 		} catch (RedirectException $e) {
 			return $this->redirect($this->request->getBasePath() . '/' . $e->getURL());
 		} catch (FileNotFoundException $e) {
-			$controller = new Controller\ErrorController($this->request, $this->env, $e);
+			$controller = new Controller\ErrorController($this->request, $this->container, $e);
 			return $controller->fileNotFoundAction();
 		} catch (\Exception $e) {
-			$controller = new Controller\ErrorController($this->request, $this->env, $e);
+			$controller = new Controller\ErrorController($this->request, $this->container, $e);
 			return $controller->exceptionAction();
 		}
 	}

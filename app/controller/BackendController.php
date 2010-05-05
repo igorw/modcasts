@@ -10,18 +10,19 @@
 
 namespace Modcasts\Controller;
 
-use Modcasts\Controller,
-	Modcasts\Environment;
+use Modcasts\Controller;
 
 use Symfony\Components\RequestHandler\Request,
 	Symfony\Components\RequestHandler\Response;
 
+use Symfony\Components\DependencyInjection\ContainerInterface as Container;
+
 class BackendController extends Controller {
 	private $session;
 	
-	public function __construct(Request $request, Environment $env) {
-		parent::__construct($request, $env);
-		$this->session = $this->env->container->session;
+	public function __construct(Request $request, Container $container) {
+		parent::__construct($request, $container);
+		$this->session = $this->container->session;
 	}
 	
 	public function indexAction() {
@@ -33,32 +34,32 @@ class BackendController extends Controller {
 	public function listEpisodesAction() {
 		$this->loginCheckAndRedirect();
 		
-		$repository = $this->env->em->getRepository('Modcasts\Entities\Episode');
+		$repository = $this->container->em->getRepository('Modcasts\Entities\Episode');
 		$episodes = $repository->findAllDesc();
 		
 		return $this->render('backend/listEpisodes.html', array(
 			'episodes'		=> $episodes,
-			'csrfTokenFactory'	=> $this->env->container->csrf_token_factory,
+			'csrfTokenFactory'	=> $this->container->csrf_token_factory,
 		));
 	}
 	
 	public function editEpisodeAction($id) {
 		$this->loginCheckAndRedirect();
 		
-		$episode = $this->env->em->find('Modcasts\Entities\Episode', $id);
+		$episode = $this->container->em->find('Modcasts\Entities\Episode', $id);
 		
 		if ( ! $episode) {
 			throw new \Modcasts\FileNotFoundException;
 		}
 		
-		$artists = $this->env->em->getRepository('Modcasts\Entities\Artist')
+		$artists = $this->container->em->getRepository('Modcasts\Entities\Artist')
 			->findAll();
-		$licenses = $this->env->em->getRepository('Modcasts\Entities\License')
+		$licenses = $this->container->em->getRepository('Modcasts\Entities\License')
 			->findAll();
 		
 		$errors = array();
 		
-		$csrfTokenFactory = $this->env->container->csrf_token_factory;
+		$csrfTokenFactory = $this->container->csrf_token_factory;
 		$csrfToken = $csrfTokenFactory->getToken('backend/editEpisode/' . $episode->id,
 			$this->request->get('csrfCreated'));
 		
@@ -86,17 +87,17 @@ class BackendController extends Controller {
 		$this->loginCheckAndRedirect();
 		
 		$episode = new \Modcasts\Entities\Episode;
-		$episode->id = $this->env->em->getRepository('Modcasts\Entities\Episode')
+		$episode->id = $this->container->em->getRepository('Modcasts\Entities\Episode')
 			->getNextId();
 		
-		$artists = $this->env->em->getRepository('Modcasts\Entities\Artist')
+		$artists = $this->container->em->getRepository('Modcasts\Entities\Artist')
 			->findAll();
-		$licenses = $this->env->em->getRepository('Modcasts\Entities\License')
+		$licenses = $this->container->em->getRepository('Modcasts\Entities\License')
 			->findAll();
 		
 		$errors = array();
 		
-		$csrfTokenFactory = $this->env->container->csrf_token_factory;
+		$csrfTokenFactory = $this->container->csrf_token_factory;
 		$csrfToken = $csrfTokenFactory->getToken('backend/newEpisode',
 			$this->request->get('csrfCreated'));
 		
@@ -134,8 +135,8 @@ class BackendController extends Controller {
 		$errors = $episode->validate();
 		
 		if ( ! sizeof($errors)) {
-			$this->env->em->persist($episode);
-			$this->env->em->flush();
+			$this->container->em->persist($episode);
+			$this->container->em->flush();
 			throw new \Modcasts\RedirectException('backend/listEpisodes');
 		}
 		
@@ -145,21 +146,21 @@ class BackendController extends Controller {
 	public function deleteEpisodeAction($id) {
 		$this->loginCheckAndRedirect();
 		
-		$episode = $this->env->em->find('Modcasts\Entities\Episode', $id);
+		$episode = $this->container->em->find('Modcasts\Entities\Episode', $id);
 		
 		if ( ! $episode) {
 			throw new \Modcasts\FileNotFoundException;
 		}
 		
-		$csrfTokenFactory = $this->env->container->csrf_token_factory;
+		$csrfTokenFactory = $this->container->csrf_token_factory;
 		$csrfToken = $csrfTokenFactory->getToken('backend/deleteEpisode/' . $episode->id,
 			$this->request->get('csrfCreated'));
 		if ( ! $csrfToken->check($this->request->get('csrfHash'))) {
 			throw new \Exception('Please try again.');
 		}
 		
-		$this->env->em->remove($episode);
-		$this->env->em->flush();
+		$this->container->em->remove($episode);
+		$this->container->em->flush();
 		throw new \Modcasts\RedirectException('backend/listEpisodes');
 	}
 	
@@ -190,7 +191,7 @@ class BackendController extends Controller {
 	}
 	
 	public function authenticate($username, $password) {
-		$repository = $this->env->em->getRepository('Modcasts\Entities\Account');
+		$repository = $this->container->em->getRepository('Modcasts\Entities\Account');
 		$account = $repository->findOneBy(array(
 			'username'	=> $username,
 			'password'	=> hash('sha256', $password),
@@ -218,12 +219,12 @@ class BackendController extends Controller {
 	}
 	
 	public function findArtist($id) {
-		$artist = $this->env->em->find('Modcasts\Entities\Artist', $id);
+		$artist = $this->container->em->find('Modcasts\Entities\Artist', $id);
 		return $artist;
 	}
 	
 	public function findLicense($id) {
-		$license = $this->env->em->find('Modcasts\Entities\License', $id);
+		$license = $this->container->em->find('Modcasts\Entities\License', $id);
 		return $license;
 	}
 }
