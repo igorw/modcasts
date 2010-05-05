@@ -14,7 +14,7 @@ use Modcasts\Feed\Feed,
 	Modcasts\Feed\FeedItem,
 	Modcasts\Feed\Author;
 
-class Atom {
+class Atom implements WriterInterface {
 	public $xml;
 	
 	const CONTENT_TYPE = 'application/atom+xml';
