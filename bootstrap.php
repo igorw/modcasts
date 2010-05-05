@@ -41,4 +41,4 @@ $container = new \Symfony\Components\DependencyInjection\Builder;
 $loader = new \Symfony\Components\DependencyInjection\Loader\YamlFileLoader;
 $container->merge($loader->load(__DIR__ . '/services.yml'));
 
-$em = $container->getService('doctrine.orm.entity_manager');
+$em = $container->em;

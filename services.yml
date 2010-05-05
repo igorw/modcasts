@@ -28,6 +28,7 @@ services:
   csrf_token_factory:
     class: Modcasts\CSRFTokenFactory
     arguments: [%csrf_token.secret%]
+  em: @doctrine.orm.entity_manager
   doctrine.orm.entity_manager:
     class: Doctrine\ORM\EntityManager
     constructor: create

@@ -22,9 +22,7 @@ modcasts is a site with screencasts on phpBB modding.
 * backend
 * comments (gravatar?)
 * password salting
-* backend nav
 * pagination
 * PHPUnit tests?
-* Symfony DI container
 * search (lucene)
 * add timeout to csrf token
