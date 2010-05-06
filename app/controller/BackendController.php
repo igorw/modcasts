@@ -12,8 +12,8 @@ namespace Modcasts\Controller;
 
 use Modcasts\Controller;
 
-use Symfony\Components\RequestHandler\Request,
-	Symfony\Components\RequestHandler\Response;
+use Symfony\Components\HttpKernel\Request,
+	Symfony\Components\HttpKernel\Response;
 
 use Symfony\Components\DependencyInjection\ContainerInterface as Container;
 

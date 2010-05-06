@@ -7,9 +7,9 @@ parameters:
 
 services:
   request:
-    class: Symfony\Components\RequestHandler\Request
+    class: Symfony\Components\HttpKernel\Request
   response:
-    class: Symfony\Components\RequestHandler\Response
+    class: Symfony\Components\HttpKernel\Response
   session:
     class: Symfony\Framework\WebBundle\Session\NativeSession
     arguments: [{ session_name: MODCASTS_SESSION }]
