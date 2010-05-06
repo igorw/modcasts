@@ -35,15 +35,20 @@ class Router {
 			}
 			$parts = explode('/', $requestPath);
 
-			$controllerName = (isset($parts[0]) && preg_match('#^[a-z]+$#', $parts[0])) ? (string) $parts[0] : 'index';
+			$controllerName = (isset($parts[0]) && preg_match('#^[a-zA-Z]+$#', $parts[0])) ? (string) $parts[0] : 'index';
 			$class = 'Modcasts\Controller\\' . ucfirst($controllerName) . 'Controller';
 			if ( ! class_exists($class)) {
 				throw new FileNotFoundException;
 			}
 			
+			$reflectionClass = new \ReflectionClass($class);
+			
+			if ($reflectionClass->isAbstract()) {
+				throw new FileNotFoundException;
+			}
+			
 			$actionName = (isset($parts[1]) && preg_match('#^[a-zA-Z]+$#', $parts[1])) ? (string) $parts[1] : 'index';
 			$method = $actionName . 'Action';
-			$reflectionClass = new \ReflectionClass($class);
 			if ( ! $reflectionClass->hasMethod($method)) {
 				throw new FileNotFoundException;
 			}
