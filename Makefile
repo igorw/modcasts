@@ -1,12 +1,14 @@
 SASS		= sass
+STYLESHEETS	= public/style.css public/backend.css
 
-all: stylesheets
+all : stylesheets
 
-.PHONY: clean
+.PHONY : clean stylesheets
 
-stylesheets: public/style.css public/backend.css
-	$(SASS) public/style.sass public/style.css
-	$(SASS) public/backend.sass public/backend.css
+stylesheets : $(STYLESHEETS)
 
-clean:
+%.css : %.sass
+	$(SASS) $< $@
+
+clean :
 	rm public/*.css
