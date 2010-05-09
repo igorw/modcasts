@@ -11,12 +11,17 @@ modcasts is a site with screencasts on phpBB modding.
 * twig
 * sass
 
+## requirements
+
+* PHP 5.3
+
 ## install
 
-1. adjust configuration in config/*.yml
-2. initialize the db with ./doctrine orm:schem-tool:create
-3. compile stylesheets with make stylesheets
-4. PROFIT!
+1. populate submodules using `git sumodule update --init`
+2. adjust configuration in config/*.yml
+3. initialize the db with `./doctrine orm:schem-tool:create`
+4. compile stylesheets with `make stylesheets`
+5. PROFIT!
 
 ## todo
 
