@@ -15,5 +15,7 @@
 	<p class="download-container clearfix">
 		<span class="download-link"><a href="{{ basePath }}data/episodes/{{ episode.id }}.ogv">Download</a> <span class="download-extra">({{ episode.file_bytes|filesize }})</span></span>
 	</p>
-	{{ episode.show_notes|markdown }}
+	{% if showNotes %}
+		{{ episode.show_notes|markdown }}
+	{% endif %}
 </section>

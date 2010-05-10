@@ -34,6 +34,7 @@ class IndexController extends Controller {
 		
 		return $this->render('episode.html', array(
 			'episode'	=> $episode,
+			'showNotes'	=> true,
 		));
 	}
 	
