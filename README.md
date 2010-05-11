@@ -17,7 +17,7 @@ modcasts is a site with screencasts on phpBB modding.
 
 ## install
 
-1. populate submodules using `git sumodule update --init`
+1. populate submodules using `git submodule update --init`
 2. adjust configuration in config/*.yml
 3. initialize the db with `./doctrine orm:schem-tool:create`
 4. compile stylesheets with `make stylesheets`
